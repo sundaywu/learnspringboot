@@ -22,28 +22,53 @@
 *                 神兽保佑 
 *                 代码无BUG! 
 */
-package com.sunday.learn.dao;
 
+package com.sunday.learn.dao.impl;
+
+import com.sunday.learn.dao.UserDao;
+import com.sunday.learn.mapper.UserMapper;
 import com.sunday.learn.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @Author : Sunday
  * @Description :
- * @Date : 13:57 2017/8/21
+ * @Date : 11:56 2017/8/21
  * @Modified By :
  */
-public interface UserDao {
+@Repository
+public class UserDaoImpl implements UserDao{
 
-    public Integer addUser(User user) throws DataAccessException;
+    @Autowired
+    private UserMapper userMapper;
 
-    public List<User> getAllUser() throws DataAccessException;
+    @Override
+    public Integer addUser(User user) throws DataAccessException {
+        return userMapper.addUser(user);
+    }
 
-    public User getUserById(Integer id) throws DataAccessException;
+    @Override
+    public List<User> getAllUser() throws DataAccessException {
+        return userMapper.getAllUser();
+    }
 
-    public Integer delUserById(Integer id) throws DataAccessException;
+    @Override
+    public User getUserById(Integer id) throws DataAccessException {
+        return userMapper.getUserById(id);
+    }
 
-    public Integer updateUserById(User user) throws DataAccessException;
+    @Override
+    public Integer delUserById(Integer id) throws DataAccessException {
+        return userMapper.delUserById(id);
+    }
+
+    @Override
+    public Integer updateUserById(User user) throws DataAccessException {
+        return userMapper.updateUserById(user);
+    }
+
 }
