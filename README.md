@@ -11,6 +11,13 @@
 ## swaggerui
 http://127.0.0.1:9999/swagger-ui.html
 
+## druid
+http://localhost:9999/druid/datasource.html  
+admin 123456
+
+http://localhost:9999/druid2/datasource.html  
+admin2 123456
+
 ## Sql语句
 ```sql
 CREATE TABLE `user` (
