@@ -32,11 +32,8 @@ import com.sunday.learn.service.UserService;
 import com.sunday.learn.utils.ResultUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @Author : Sunday
@@ -47,7 +44,6 @@ import java.util.List;
 @Api(value="User Controller",description="用户表操作",tags={"用户表操作接口"})
 @RestController
 @RequestMapping(value = "/user")
-@Slf4j
 public class UserController {
 
     @Autowired
