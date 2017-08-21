@@ -1,12 +1,15 @@
 #A SpringBoot Demo from Sunday
 
 ##TODO
+- 热部署
+
+##DONE
 - mybatis sql日志打印 debug模式下
 - mybatis update多个参数用注解方式如何使用
 - 返回结果的规范性封装
 
 ##swaggerui
-http://127.0.0.1:8888/swagger-ui.html
+http://127.0.0.1:9999/swagger-ui.html
 
 ##Sql语句
 ```sql
