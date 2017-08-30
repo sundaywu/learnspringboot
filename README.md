@@ -2,13 +2,13 @@
 
 ## TODO
 - 热部署
-- 邮件发送
-- 日志调整，日志等级
 
 ## DONE
-- mybatis sql日志打印 debug模式下
+- mybatis sql日志打印到文件 debug模式下
 - mybatis update多个参数用注解方式如何使用
 - 返回结果的规范性封装
+- 日志调整，日志等级
+- 邮件发送
 
 ## swaggerui
 http://127.0.0.1:9999/swagger-ui.html
