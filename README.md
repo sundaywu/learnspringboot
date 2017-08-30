@@ -2,6 +2,7 @@
 
 ## TODO
 - 热部署
+- 集成OAuth2
 
 ## DONE
 - mybatis sql日志打印到文件 debug模式下
