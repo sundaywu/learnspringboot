@@ -2,6 +2,8 @@
 
 ## TODO
 - 热部署
+- 邮件发送
+- 日志调整，日志等级
 
 ## DONE
 - mybatis sql日志打印 debug模式下
