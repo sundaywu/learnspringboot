@@ -2,7 +2,8 @@
 
 ## TODO
 - 热部署
-- 集成OAuth2
+- redis & memcache
+- 登录相关信息存储到redis中，基类
 
 ## DONE
 - mybatis sql日志打印到文件 debug模式下
