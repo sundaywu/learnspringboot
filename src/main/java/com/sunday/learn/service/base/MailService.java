@@ -23,7 +23,7 @@
 *                 代码无BUG! 
 */
 
-package com.sunday.learn.service;
+package com.sunday.learn.service.base;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

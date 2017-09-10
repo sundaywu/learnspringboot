@@ -23,32 +23,48 @@
 *                 代码无BUG! 
 */
 
-package com.sunday.learn;
+package com.sunday.learn.service.base;
 
-import com.sunday.learn.service.base.MailService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 /**
- * @Author : Sunday
- * @Description :
- * @Date : 16:36 2017/8/30
+ * @Author : sunday
+ * @Description : redis服务类
+ * @Date : 16:12 2017/9/9
  * @Modified By :
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class MailTests {
+@Slf4j
+public class RedisService {
 
     @Autowired
-    private MailService mailService;
+    JedisPool jedisPool;
 
-    private String to = "sundaywu319@163.com";
+    /**
+     * 设置数据(不限时间)
+     * todo
+     *
+     * @param key
+     * @param val
+     * @return
+     */
+    public Boolean setRedis(String key, Object val) {
+        Jedis jedis = jedisPool.getResource();
+        try {
+            if (!jedis.exists(JSONObject.toJSONString(key))) {
+                jedis.set(key, JSONObject.toJSONString(val));
+            } else {
+                log.warn("");
+            }
+        } catch (Exception e) {
 
-    @Test
-    public void sendSimpleMail() {
-        mailService.sendSimpleMail(to, "主题：简单邮件", "测试邮件内容");
+        } finally {
+
+        }
+        return true;
     }
+
 }
