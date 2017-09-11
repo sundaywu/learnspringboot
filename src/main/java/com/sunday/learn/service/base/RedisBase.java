@@ -49,7 +49,7 @@ public class RedisBase {
      * @param jedis
      * @return
      */
-    public Jedis getResource(Jedis jedis) {
+    public void getResource(Jedis jedis) {
         log.info("Redis getResource start.");
         try {
             jedis = jedisPool.getResource();
@@ -58,7 +58,6 @@ public class RedisBase {
             log.error("Redis getResource error. e : {}", e);
         }
         log.info("Redis getResource end.");
-        return jedis;
     }
 
     /**
