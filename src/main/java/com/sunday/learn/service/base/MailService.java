@@ -22,37 +22,15 @@
 *                 神兽保佑 
 *                 代码无BUG! 
 */
-
 package com.sunday.learn.service.base;
-
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.io.File;
 
 /**
  * @Author : Sunday
- * @Description : 邮件服务
- * @Date : 16:28 2017/8/30
+ * @Description :
+ * @Date : 10:15 2017/9/11
  * @Modified By :
  */
-@Service
-@Slf4j
-public class MailService {
-
-    @Autowired
-    private JavaMailSender sender;
-
-    @Value("${spring.mail.username}")
-    private String from;
+public interface MailService {
 
     /**
      * 发送纯文本简单邮件
@@ -61,19 +39,7 @@ public class MailService {
      * @param subject
      * @param content
      */
-    public void sendSimpleMail(String to, String subject, String content){
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(from);
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(content);
-        try {
-            sender.send(message);
-            log.info("send simple mail success. from : {}, to : {}", from, to);
-        } catch (Exception e) {
-            log.error("send simple mail failed. from : {}, to : {}, e : {}", from, to, e);
-        }
-    }
+    public void sendSimpleMail(String to, String subject, String content);
 
     /**
      * 发送html格式的邮件
@@ -82,21 +48,7 @@ public class MailService {
      * @param subject
      * @param content
      */
-    public void sendHtmlMail(String to, String subject, String content){
-        MimeMessage message = sender.createMimeMessage();
-        try {
-            //true表示需要创建一个multipart message
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setFrom(from);
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(content, true);
-            sender.send(message);
-            log.info("send html mail success. from : {}, to : {}", from, to);
-        } catch (MessagingException e) {
-            log.error("send html mail failed. from : {}, to : {}, e : {}", from, to, e);
-        }
-    }
+    public void sendHtmlMail(String to, String subject, String content);
 
     /**
      * 发送带附件的邮件
@@ -106,24 +58,7 @@ public class MailService {
      * @param content
      * @param filePath
      */
-    public void sendAttachmentsMail(String to, String subject, String content, String filePath){
-        MimeMessage message = sender.createMimeMessage();
-        try {
-            //true表示需要创建一个multipart message
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setFrom(from);
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(content, true);
-            FileSystemResource file = new FileSystemResource(new File(filePath));
-            String fileName = filePath.substring(filePath.lastIndexOf(File.separator));
-            helper.addAttachment(fileName, file);
-            sender.send(message);
-            log.info("send attachment mail success. from : {}, to : {}", from, to);
-        } catch (MessagingException e) {
-            log.error("send attachment mail failed. from : {}, to : {}, e : {}", from, to, e);
-        }
-    }
+    public void sendAttachmentsMail(String to, String subject, String content, String filePath);
 
     /**
      * 发送嵌入静态资源（一般是图片）的邮件
@@ -134,21 +69,5 @@ public class MailService {
      * @param rscPath 静态资源路径和文件名
      * @param rscId 静态资源id
      */
-    public void sendInlineResourceMail(String to, String subject, String content, String rscPath, String rscId){
-        MimeMessage message = sender.createMimeMessage();
-        try {
-            //true表示需要创建一个multipart message
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setFrom(from);
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(content, true);
-            FileSystemResource res = new FileSystemResource(new File(rscPath));
-            helper.addInline(rscId, res);
-            sender.send(message);
-            log.info("send resource mail success. from : {}, to : {}", from, to);
-        } catch (MessagingException e) {
-            log.error("send resource mail failed. from : {}, to : {}, e : {}", from, to, e);
-        }
-    }
+    public void sendInlineResourceMail(String to, String subject, String content, String rscPath, String rscId);
 }
