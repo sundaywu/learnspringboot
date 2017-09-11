@@ -25,8 +25,6 @@
 
 package com.sunday.learn.service.base.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.sunday.learn.service.base.RedisBase;
 import com.sunday.learn.service.base.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +40,10 @@ import redis.clients.jedis.JedisPool;
  */
 @Slf4j
 @Service
-public class RedisServiceImpl extends RedisBase implements RedisService {
+public class RedisServiceImpl implements RedisService {
+
+    @Autowired
+    private JedisPool jedisPool;
 
     private Jedis jedis = null;
 
@@ -139,5 +140,39 @@ public class RedisServiceImpl extends RedisBase implements RedisService {
             closeResource(jedis);
         }
         return flag;
+    }
+
+    /**
+     * 连接jedisPool连接池，返回jedis资源
+     * 添加日志记录
+     *
+     * @param jedis
+     */
+    private void getResource(Jedis jedis) {
+        log.info("Redis getResource start.");
+        try {
+            jedis = jedisPool.getResource();
+            log.info("Redis getResource success.");
+        } catch (Exception e) {
+            log.error("Redis getResource error. e : {}", e);
+        }
+        log.info("Redis getResource end.");
+    }
+
+    /**
+     * 返还到连接池
+     * 添加日志记录
+     *
+     * @param jedis
+     */
+    private void closeResource(Jedis jedis) {
+        log.info("Redis closeResource start.");
+        try {
+            jedis.close();
+            log.info("Redis closeResource success.");
+        } catch (Exception e) {
+            log.error("Redis closeResource error. e : {}", e);
+        }
+        log.info("Redis closeResource end.");
     }
 }
