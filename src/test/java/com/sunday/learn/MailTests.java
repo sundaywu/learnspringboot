@@ -27,10 +27,8 @@ package com.sunday.learn;
 
 import com.sunday.learn.service.base.MailService;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * @Author : Sunday
@@ -38,7 +36,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @Date : 16:36 2017/8/30
  * @Modified By :
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class MailTests {
 
