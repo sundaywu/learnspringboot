@@ -26,11 +26,15 @@
 package com.sunday.learn.service.base.impl;
 
 import com.sunday.learn.service.base.RedisService;
+import com.sunday.learn.utils.ParamFormatUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @Author : sunday
@@ -110,22 +114,21 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public Boolean delKeyValue(String key) {
-        Boolean flag = false;
+    public Long delKeyValue(String key) {
+        Long num = 0L;
         try {
             getResource(jedis);
             if (jedis.exists(key)) {
-                jedis.del(key);
+                num = jedis.del(key);
             } else {
                 log.warn("Redis del key does not exist. key : {}", key);
             }
-            flag = true;
         } catch (Exception e) {
             log.error("Redis del error. key : {}, e ： {}", key, e);
         } finally {
             closeResource(jedis);
         }
-        return flag;
+        return num;
     }
 
     @Override
@@ -140,6 +143,118 @@ public class RedisServiceImpl implements RedisService {
             closeResource(jedis);
         }
         return flag;
+    }
+
+    @Override
+    public Long zadd(String key, double score, String member) {
+        Long num = 0L;
+        try {
+            getResource(jedis);
+            num = jedis.zadd(key, score, member);
+        } catch (Exception e) {
+            log.error("Redis zadd error. param : {}, e ： {}", ParamFormatUtils.formatLog(key, score, member), e);
+        } finally {
+            closeResource(jedis);
+        }
+        return num;
+    }
+
+    @Override
+    public Long zadd(String key, Map<String, Double> scoreMembers) {
+        Long num = 0L;
+        try {
+            getResource(jedis);
+            num = jedis.zadd(key, scoreMembers);
+        } catch (Exception e) {
+            log.error("Redis zadd error. param : {}, e ： {}", ParamFormatUtils.formatLog(key, scoreMembers), e);
+        } finally {
+            closeResource(jedis);
+        }
+        return num;
+    }
+
+    @Override
+    public Double zscore(String key, String member) {
+        Double ret = 0d;
+        try {
+            getResource(jedis);
+            ret = jedis.zscore(key, member);
+        } catch (Exception e) {
+            log.error("Redis zscore error. param : {}, e ： {}", ParamFormatUtils.formatLog(key, member), e);
+        } finally {
+            closeResource(jedis);
+        }
+        return ret;
+    }
+
+    @Override
+    public Long zcard(String key) {
+        Long ret = 0L;
+        try {
+            getResource(jedis);
+            ret = jedis.zcard(key);
+        } catch (Exception e) {
+            log.error("Redis zcard error. param : {}, e ： {}", ParamFormatUtils.formatLog(key), e);
+        } finally {
+            closeResource(jedis);
+        }
+        return ret;
+    }
+
+    @Override
+    public Set<String> zrangeByScore(String key, double min, double max, int offset, int count) {
+        Set<String> ret = null;
+        try {
+            getResource(jedis);
+            ret = jedis.zrangeByScore(key, min, max, offset, count);
+        } catch (Exception e) {
+            log.error("Redis zrangeByScore error. param : {}, e ： {}", ParamFormatUtils.formatLog(key, min, max, offset, count), e);
+        } finally {
+            closeResource(jedis);
+        }
+        return ret;
+    }
+
+    @Override
+    public Set<String> zrangeByScore(String key, double min, double max) {
+        Set<String> ret = null;
+        try {
+            getResource(jedis);
+            ret = jedis.zrangeByScore(key, min, max);
+        } catch (Exception e) {
+            log.error("Redis zrangeByScore error. param : {}, e ： {}", ParamFormatUtils.formatLog(key, min, max), e);
+        } finally {
+            closeResource(jedis);
+        }
+        return ret;
+    }
+
+    @Override
+    public Set<String> zrevrangeByScore(String key, double max, double min, int offset, int count) {
+        Set<String> ret = null;
+        try {
+            getResource(jedis);
+            ret = jedis.zrevrangeByScore(key, min, max, offset, count);
+        } catch (Exception e) {
+            log.error("Redis zrevrangeByScore error. param : {}, e ： {}", ParamFormatUtils.formatLog(key, min, max, offset, count), e);
+        } finally {
+            closeResource(jedis);
+        }
+        return ret;
+    }
+
+    @Override
+    public Set<String> zrevrangeByScore(String key, double max, double min) {
+        Set<String> ret = null;
+        try {
+            getResource(jedis);
+            ret = jedis.zrevrangeByScore(key, min, max);
+        } catch (Exception e) {
+            log.error("Redis zrevrangeByScore error. param : {}, e ： {}", ParamFormatUtils.formatLog(key, min, max), e);
+        } finally {
+            closeResource(jedis);
+        }
+        return ret;
     }
 
     /**
